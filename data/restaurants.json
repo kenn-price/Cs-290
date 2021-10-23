@@ -1,0 +1,69 @@
+[
+{
+    "_id":"616f88e364f750c182afcb75",
+    "name":  "Chilli's",
+  "description": "A cheap dining option that has a variety of foods",
+  "website":"https://www.chilis.com/",
+  "phone":"843-413-6059",
+  "hours": "9:00-9:00",
+  "address":"3015 W Radio Dr, Florence, SC 29501",
+  "owner":"Brinkers International",
+  "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
+  "averageRating": 3.5,
+  "cost": 25
+},
+{
+    "_id":"616f89596290dd08f11783e0",
+    "name": "Applebees",
+    "description": "A cheap dining option that has a variety of foods",
+    "website":"https://www.applebees.com/",
+    "phone":"888-592-7753",
+    "hours": "11:00-11:00",
+    "address":"203 S 5th St, Hartsville, SC 29550",
+    "owner":"Dine Brands Global",
+    "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
+    "averageRating": 2.5,
+    "costAverage": 27
+},
+{
+    "_id":"616f8bd51d65b320fdf135fc",
+    "name": "OutBack",
+    "description": " Australian-themed American casual dining restaurant chain",
+    "website":"https://www.outback.com/",
+    "phone":"843-679-0055",
+    "hours": "11:00-10:00",
+    "address":"110 Dunbarton Dr, Florence, SC 29501",
+    "owner":"Bloomin' Brands",
+    "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
+    "averageRating": 3.0,
+    "costAverage": 35
+    
+},
+{
+    "_id":"61707ae15733cd0a7747f26b",
+    "name": "LongHorn SteakHouse",
+    "description": " Casual steakhouse chain known for grilled beef & other American dishes in a ranch-style space.",
+    "website":"https://www.longhornsteakhouse.com/",
+    "phone":"(843) 665-9120",
+    "hours": "11:00-10:00",
+    "address":"3021 W Radio Dr, Florence, SC 29501",
+    "owner":"Darden Restaurants",
+    "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
+    "averageRating": 4.2,
+    "costAverage": 35  
+},{
+    "_id":"61707b22fbf2ec3f01590c55",
+    "name": "Golden Corral",
+    "description": " Family-friendly buffet chain featuring all-you-can-eat American fare, plus salad & dessert bars.",
+    "website":"https://goldencorral.com/",
+    "phone":"(843) 661-1021",
+    "hours": "10:00-9:00",
+    "address":"3021 W Radio Dr, Florence, SC 29501",
+    "owner":"Investors Management Corporation",
+    "items":["Chicken","Asian","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
+    "averageRating": 4.0,
+    "costAverage": 20
+    
+}
+
+]

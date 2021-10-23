@@ -1,0 +1,46 @@
+[
+    {
+        "name": "Cajon Chicken Alfredo",
+        "description":"Cajun Chicken Pasta. Grilled chicken, penne in Alfredo sauce, topped with chile spices, Parmesan, tomatoes, green onions.",
+        "dish_item":"Pasta",
+        "website":"https://www.chilis.com/menu/chicken-seafood/cajun-chicken-pasta",
+        "sesonalMenu": false,
+        "cost": 12.99,
+        "restaurant":"616f88e364f750c182afcb75"
+    },
+    {
+        "name": "Whisky Bacon Burger",
+        "description":"Savor the rich flavor in this tasty original. An all-beef patty topped with two slices of Pepper Jack cheese, crispy onions, two strips of Applewood-smoked bacon and Fireball® Whisky-infused steak sauce.",
+        "dish_item":"Burgers",
+        "website":"https://www.applebees.com/en/menu/burgers/whisky-bacon-burger",
+        "sesonalMenu": false,
+        "cost":10.99,
+        "restaurant":"616f89596290dd08f11783e0"
+    },
+    {
+        "name": "Bloomin' Onion",
+        "description":"Our special onion is hand-carved, cooked until golden and ready to dip into our spicy signature bloom sauce.",
+        "dish_item":"Appetizers",
+        "website":"https://order.outback.com/menu/florence-2/products/32239579",
+        "sesonalMenu": false,
+        "cost": 7.99,
+        "restaurant":"616f8bd51d65b320fdf135fc" 
+    },
+    {
+        "name": "The LongHorn Porterhouse",
+        "description":"22 oz porterhouse combines a bone-in strip and a tender filet into one thick cut.",
+        "dish_item":"Steak",
+        "website":"https://www.longhornsteakhouse.com/menu/the-longhorn-porterhouse/prod4450042",
+        "sesonalMenu": false,
+        "cost": 28.99,
+        "restaurant":"61707ae15733cd0a7747f26b" 
+    },{
+        "name": "Golden Delicious Shrimp",
+        "description":"suateed shrimp",
+        "dish_item":"Seafood",
+        "website":"https://www.goldencorral.com/menu/",
+        "sesonalMenu": false,
+        "cost": 13.49,
+        "restaurant":"61707b22fbf2ec3f01590c55" 
+    }
+]
