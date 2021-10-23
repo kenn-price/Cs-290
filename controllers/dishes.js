@@ -63,3 +63,36 @@ res.status(201).json({
 })
 
      });
+// put
+     exports.updateDish = asyncHandler(async (req,res, next) => {
+        let Dish = await Dish.findById(req.params.teamId)
+
+        if (!dish){
+            return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 404))
+        }
+
+        dish = await Dish.findByIdAndUpdate(req.params.teamId, req.body, {
+            new: true,
+            runValidators: true
+        })
+
+            res.status(200).json({
+                sucess: true,
+                data: dish,
+            });
+          });
+          exports.deleteDish = asyncHandler(async (req,res, next) => {
+            let Dish = await Dish.findById(req.params.teamId)
+    
+            if (!dish){
+                return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 404))
+            }
+    
+           await dish.remove()
+    
+                res.status(200).json({
+                    sucess: true,
+                    data: {},
+                });
+              });
+         
