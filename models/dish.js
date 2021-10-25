@@ -57,6 +57,7 @@ seasonalMenu:{
 }, cost:{
     type:Number,
     required:true,
+    min:[0," Cost cannot be less than 0"]
 },
 createdAt:{
     type:Date,
@@ -67,6 +68,46 @@ restaurant:{
   ref:'Restaurant',
   required: true,
 }
-})
+});
 
+//========STATIC========
+// Static method to get average of Dish costs
+DishSchema.statics.getAverageCost = async function(id){
+    console.log(`Calculating average cost for restaurant with ID of ${id}`)
+
+//Create Aggregated Array
+const aggregatedArray = await this.aggregate([
+    //This array defines a "pipeline" that will be executed in order
+    {
+     $match:{restaurant: id}   
+    },
+    {
+        $group:{
+            // Get a group that has the the restaurant _id and the average of the fees
+            _id:'$restaurant',
+            getAverageCost:{$avg: '$cost'}
+        }
+    }
+]);
+
+
+//Update the restaurant with the average cost value
+try{
+await this.model('Restaurant').findByIdAndUpdate(id,{
+    averageCost: Math.ceil(aggregatedArray[0].averageCost),
+});
+}catch (err){
+    console.error(err)
+}
+};
+
+// =============Middleware=========
+//Call getAverageCost after saving
+TeamSchema.post('save', async function(){
+    this.constructor.getAverageCost(this.restaurant)
+})
+//Call getAverageCost after removing
+TeamSchema.pre('remove', async function(){
+    this.constructor.getAverageCost(this.restaurant)
+})
 module.exports = mongoose.model("Dish", DishSchema)

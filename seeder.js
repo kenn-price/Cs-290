@@ -17,14 +17,14 @@ mongoose.connect(process.env.DB_URI, {
 
 //Load JSON files
 const restaurants =JSON.parse(fs.readFileSync(`${__dirname}/data/restaurants.json`, 'utf-8'))
-const restaurants =JSON.parse(fs.readFileSync(`${__dirname}/data/dish.json`, 'utf-8'))
+const dishes =JSON.parse(fs.readFileSync(`${__dirname}/data/dishes.json`, 'utf-8'))
 
 
 //Import into DB
 const importData = async () => {
     try{
         await Restaurant.create(restaurants);
-        await Dish.create(dishes);
+       // await Dish.create(dishes);
         console.log("Data imported...")
         process.exit(0)
     }catch (err){

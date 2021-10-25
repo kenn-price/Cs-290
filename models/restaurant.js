@@ -79,9 +79,8 @@ const RestaurantSchema = new mongoose.Schema({
         min:[1, "Rating must be at least 1"],
         max:[5, "Rating must be less than or equal to 5"]
     },
-    costAverage:{
+    averageCost:{
         type:Number,
-        required:true,
     },
     photo:{
         type: String,   // Just the file name
