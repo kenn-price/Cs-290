@@ -71,8 +71,8 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
         //    const distanceInMiles = req.query.distanceInMiles
             const {zipcode,distanceInMiles}= req.query
            // Get lat/lng from our geocoder
-            const loc = await geocoder.geocoder(zipcode)
-            const lac = loc[0].latitude
+            const loc = await geocoder.geocode(zipcode)
+            const lat = loc[0].latitude
             const lng = loc[0].longitude
 
             console.log(lat,lng);
@@ -81,7 +81,7 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
             const earthRadiusInMiles = 3959
             const radius = distanceInMiles/ earthRadiusInMiles;
            // Query the DB and return response
-           const restaurants = await Restaurants.find({
+           const restaurants = await Restaurant.find({
                location: {$geoWithin:{ $centerSphere: [ [lng , lat], radius ] }}
            })
 

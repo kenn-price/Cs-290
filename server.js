@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 const dotenv = require('dotenv')
 const fileupload = require('express-fileupload')
+const cookieParser= require('cookie-parser')
 
 //Import Local Files
 const connectToDB = require('./config/connectToDB');
@@ -17,6 +18,9 @@ dotenv.config({path:"./config/config.env"})
 const app = express()
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+
+// Cookie Parser
+app.use(cookieParser())
 
 //Connect to DB
 connectToDB();
@@ -51,7 +55,8 @@ const server = app.listen(PORT, () => {
 // Handle any unhandled promise rejections
 process.on('unhandledRejection', (err,promise) => {
 // log the problem to the console
-console.log(`Unhandled Promise Rejection: ${err.message}`)
+console.log(`Unhandled Promise Rejection: ${err.message}`);
+console.log(err);
 // STop the server and the process
 server.close(() => {
 process.exit(1)

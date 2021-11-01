@@ -34,8 +34,8 @@ if(req.query.sort) {
     query= query.sort('createdAt');
 }
 //Pagination logic
-const page =parseInt(req.qury.page, 10) || 1;
-const limit= parseInt(req.qury.limit, 10) || 20;
+const page =parseInt(req.query.page, 10) || 1;
+const limit= parseInt(req.query.limit, 10) || 20;
 const startIndex = (page - 1)* limit;
 const endIndex = page * limit - 1;
 const total = await model.countDocuments(JSON.parse(queryStr));
