@@ -6,26 +6,22 @@ const asyncHandler =require('../middleware/asyncHandler')
 // Get api/v1/dishes
 // get /api/v1/restaurants/:id/dishes
 exports.getDishes = asyncHandler(async (req,res, next) => {
-    let query;
-
+// let query
 
     if (req.params.id){
-        query = Dish.find({ restaurant:req.params.id} )
-    }else {
-        query= Dish.find().populate({
-            path: 'restaurant',
-            select:'name items'
+        const dishes= await Dish.find({ restaurant:req.params.id});
+        return res.status(200).json({
+            sucess: true,
+            count:dishes.length,
+            data: dishes,
         });
+    } else {
+        res.status(200).json(res.advancedResults);
     }
 
-
-    const dishes = await query;
-    res.status(200).json({
-        success: true,
-        count: teams.length,
-        data:teams
-    });
 });
+  
+
 exports.getDish = asyncHandler(async (req,res, next) => {
    const team = await Dish.findById(req.params.dishId).populate({
      path: 'restaurants',

@@ -4,81 +4,12 @@ const Restaurant= require('../models/restaurant')
 const ErrorHandler = require('../utils/errorResponse')
 const asyncHandler =require('../middleware/asyncHandler')
 const geocoder= require('../utils/geocoder');
+const path = require('path');
 
 
 exports.getRestaurants = asyncHandler(async (req,res, next) => {
-// Initialize query
-let query;
-
-//COpy req.query
-const reqQuery={...req.query}
-
-//Fields to exclude
-const fieldsToRemove =['select','sort','page','limit'];
-
-// Loop over fieldsToRemove and delete them from reqQuery
-fieldsToRemove.forEach((param) =>{
-    delete reqQuery[param];
-});
-//console.log(reqQuery);
-// create custon query string
-let queryStr=JSON.stringify(req.query);
-queryStr.replace(/\b(gt|gte|lt|in)\b/g, (match) => '$' + match)
-//console.log(queryStr);
-
-query = Restaurant.find(JSON.parse(queryStr)).populate('dishes');
-
-// Select Fields
-if (req.query.select){
-    const fields = req.query.select.split(',').join(' ');
-    query = query.select(fields);
-    //console.log(req.query.select);
-}
-// sort
-if(req.query.sort) {
-    const sortBy = req.query.sort.split(',').join(' ')
-    query = query.sort(sortBy)
-}else{
-    query= query.sort('createdAt');
-}
-//Pagination logic
-const page =parseInt(req.qury.page, 10) || 1
-const limit= parseInt(req.qury.limit, 10) || 20
-const startIndex = (page - 1)* limit
-const endIndex = page * limit - 1
-const total = await University.countDocuments()
-
-query = query.skip(startIndex).limit(limit);
-//Limit 20, Page 3
-
-//Executing query
-const restaurants = await query;
-   // const restaurants= await Restaurant.find();
-
-//Pagination results
-const pagination ={}
-// not on the last page
-if(endIndex < total){
-    pagination.next ={
-      page: page + 1,
-      limit  
-    }
-}
-
-// not on the first page'
-if(startIndex >0 ){
-    pagination.prev ={
-        page: page-1,
-        limit
-    };
-}
-
-   res.status(200).json({
-    success: true,
-    count: restaurants.length,
-    pagination,
-    data: restaurants
-    });
+res.status(200).json(res.advancedResults)
+       
 });
 
     exports.getRestaurant =asyncHandler(async (req,res, next) => {
@@ -106,7 +37,7 @@ exports.createRestaurant= asyncHandler( async (req,res, next) => {
 exports.updateRestaurant= asyncHandler( async (req,res, next) => {
  
 const restaurant = await Restaurant.findByIdAndUpdate(req.params.id);
-if (!university){
+if (!restaurant){
     return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,500));     
     }
 
@@ -121,9 +52,12 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
             runValidators: true
         })
         
-        if (!university){
+        if (!restaurant){
             return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,500)); 
         }
+        restaurant.remove();
+
+
         res.status(200).json({
             success: true,
             data: restaurant
@@ -157,3 +91,48 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
                data: restaurants
            })
             });
+            exports.uploadRestaurantPhoto = asyncHandler(async (req,res, next) => {
+               // FInd Restaurant
+                const restaurant = await Restaurant.findById(req.params.id)
+                if (!restaurant){
+                    return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,500)); 
+                }
+               //validate the image
+               if(!req.files){
+                return  next(new ErrorHandler(`Please upload an image file`,400)); 
+               }
+               const file = req.files.file
+
+                //Make sure file is an image
+                if(!file.mimetype.startsWith("image")){
+                    return  next(new ErrorHandler(`Please upload an image file`,404)); 
+                }
+                // CHeck filesize
+                if (file.size > process.env.FILE_UPLOAD_MAX_SIZE){
+                return  next(new ErrorHandler(`Please upload an image file smaller than ${process.env.FILE_UPLOAD_MAX_SIZE}`,400)); 
+
+                }
+               
+                // Change the filename: photo_restaurantid
+                file.name = `photo_${restaurant._id}${path.parse(file.name).ext}`;
+                
+               //Move the image to  the proper location
+                file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, (err) =>{
+                    if(err){
+                        console.error(err)
+                        return  next(new ErrorHandler(`Problem uploading file`, 500)); 
+ 
+                    }
+                })
+
+                //Update the restaurant with the new image filename
+                await Restaurant.findByIdAndUpdate(req.params.id, {photo: file.name})
+                res.status(200).json({
+                    success: true,
+                    data:{
+                        restaurant: restaurant._id,
+                        file: file.name
+                    },
+                })
+                //Send response(req.par)
+             });

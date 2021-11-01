@@ -103,11 +103,11 @@ await this.model('Restaurant').findByIdAndUpdate(id,{
 
 // =============Middleware=========
 //Call getAverageCost after saving
-TeamSchema.post('save', async function(){
+DishSchema.post('save', async function(){
     this.constructor.getAverageCost(this.restaurant)
 })
 //Call getAverageCost after removing
-TeamSchema.pre('remove', async function(){
+DishSchema.pre('remove', async function(){
     this.constructor.getAverageCost(this.restaurant)
 })
 module.exports = mongoose.model("Dish", DishSchema)

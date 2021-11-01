@@ -99,6 +99,7 @@ const RestaurantSchema = new mongoose.Schema({
 },{
     toJSON: {virtuals: true},
     toObject:{ virtuals: true},
+    id: false
 });
 // Will be adding mongoose middleware later that calculated lots of there fields.
 //=============Middleware================
