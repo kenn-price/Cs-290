@@ -1,0 +1,52 @@
+[
+     {
+    "_id":"618d60793ca5479e9c9f179a",
+    "username":"admin",
+    "email":"admin@admin.com",
+    "role":"user",
+    "password":"asdfasdfasdf"
+
+},{
+    "_id":"618d60c054bc1f394c9deab7",
+    "username":"Dylan Smith",
+    "email":"Dsmith@icloud.com",
+    "role":"publisher",
+    "password":"asdfasdfasdf"
+},
+{
+    "_id":"618db871dbb9b58d3503aaa4",
+    "username":"Crystal Dunn",
+    "email":"crystal_dunn@gmail.com",
+    "role":"publisher",
+    "password":"asdfasdfasdf"
+},
+{
+    "_id":"618d62351254571b17d3e213",
+    "username":"Alex Morgan",
+    "email":"Amorgan@yahoo.com",
+    "role":"publisher",
+    "password":"asdfasdfasdf"
+},
+{
+    "_id":"618d6305ca2605cc95a99cca",
+    "username":"Carli Lloyd",
+    "email":"carlilloyd@gmail.com",
+    "role":"publisher",
+    "password":"asdfasdfasdf"
+},
+{
+    "_id":"618d64217967edfe5640bc8d",
+    "username":"Lynn Williams",
+    "email":"LynnWilliams@gmail.com",
+    "role":"publisher",
+    "password":"asdfasdfasdf"
+},
+{
+    "_id":"618d64bcf34c8b4702f14318",
+    "username":"Julie Ertz",
+    "email":"JulieErtz@ahol.com",
+    "role":"user",
+    "password":"asdfasdfasdf"
+}
+
+]

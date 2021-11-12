@@ -71,6 +71,7 @@ const RestaurantSchema = new mongoose.Schema({
            'Pizza',
            'Sushi',
            'Sides',
+           'Asian',
            'Other'
         ]
     },
@@ -95,8 +96,14 @@ const RestaurantSchema = new mongoose.Schema({
         min:"00:00",
         max:"24:00",
         required:[true," Has to be military time between 0:00-24:00 hours"]
-    }
-},{
+    },
+    user:{
+    type: mongoose.Schema.ObjectId,
+    ref:'User',
+    required: true,
+  },
+},
+{
     toJSON: {virtuals: true},
     toObject:{ virtuals: true},
     id: false

@@ -28,6 +28,7 @@ dish_item:{
            'Pizza',
            'Sushi',
            'Sides',
+           'Asian',
            'Other',
            "Multiple"
     ]

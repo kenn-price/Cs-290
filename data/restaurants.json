@@ -10,7 +10,9 @@
   "owner":"Brinkers International",
   "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
   "averageRating": 3.5,
-  "cost": 25
+  "cost": 25,
+   "user":"618d60c054bc1f394c9deab7"
+    
 },
 {
     "_id":"616f89596290dd08f11783e0",
@@ -23,7 +25,8 @@
     "owner":"Dine Brands Global",
     "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
     "averageRating": 2.5,
-    "costAverage": 27
+    "costAverage": 27,
+    "user":"618db871dbb9b58d3503aaa4"
 },
 {
     "_id":"616f8bd51d65b320fdf135fc",
@@ -36,7 +39,8 @@
     "owner":"Bloomin' Brands",
     "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
     "averageRating": 3.0,
-    "costAverage": 35
+    "costAverage": 35,
+    "user":"618d62351254571b17d3e213"
     
 },
 {
@@ -50,7 +54,8 @@
     "owner":"Darden Restaurants",
     "items":["Chicken","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
     "averageRating": 4.2,
-    "costAverage": 35  
+    "costAverage": 35,
+    "user":"618d6305ca2605cc95a99cca"
 },{
     "_id":"61707b22fbf2ec3f01590c55",
     "name": "Golden Corral",
@@ -62,7 +67,8 @@
     "owner":"Investors Management Corporation",
     "items":["Chicken","Asian","Salad","Soup","Pasta","Steak","Seafood","Pork","Burgers","Appetizers","Sides"],
     "averageRating": 4.0,
-    "costAverage": 20
+    "costAverage": 20,
+    "user":"618d64217967edfe5640bc8d"
     
 }
 

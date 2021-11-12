@@ -25,7 +25,13 @@ res.status(200).json(res.advancedResults)
 });
 
 exports.createRestaurant= asyncHandler( async (req,res, next) => {
-   
+   // Check if user has already created a restaurant
+   const publishedRestaurant= await Restaurant.findOne({user: req.user.id})
+   if(publishedRestaurant && req.user.role !== 'admin'){
+       return next(new ErrorHandler('This user has already created a Restaurant',400));
+   }
+
+    req.body.user=req.user.id
    const newRestaurant= await Restaurant.create(req.body);
                                         //console.log(req.body);
     res.status(201).json({

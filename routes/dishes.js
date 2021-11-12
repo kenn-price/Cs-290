@@ -11,7 +11,7 @@ const {getDishes, getDish, createDish, updateDish, deleteDish
 
 ///api/v1/dishes
 // /api/v1/restaurants/:id/dishes
-router.route('/').get(advancedResults(Dish, {path: 'restaurants',
+router.route('/').get(advancedResults(Dish, {path: 'restaurant',
 select: 'name items' }),getDishes).post(protect,authorize('publisher','admin'), createDish);
 router.route('/:dishId').get(getDish).put(protect,authorize('publisher','admin'), updateDish).delete(protect,authorize('publisher','admin'), deleteDish);
 
