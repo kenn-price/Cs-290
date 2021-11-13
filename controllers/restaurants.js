@@ -41,11 +41,23 @@ exports.createRestaurant= asyncHandler( async (req,res, next) => {
 });
 
 exports.updateRestaurant= asyncHandler( async (req,res, next) => {
- 
-const restaurant = await Restaurant.findByIdAndUpdate(req.params.id);
+ let restaurant = await Restaurant.findById(req.params.id) 
+
 if (!restaurant){
-    return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,500));     
+    return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,404));     
     }
+
+    // Ensure user is restaurant owner
+if (restaurant.user.toString() != req.user.id && req.user.role != 'admin'){
+    return  next(new ErrorHandler(`User ${req.user.id} not authorized to update this resource`,403));     
+
+
+}
+    restaurant = await Restaurant.findByIdAndUpdate(req.params.id, req,body, {
+        new: true,
+        runValidators: true
+    });
+
 
 res.status(200).json({
     success: true,
@@ -53,14 +65,21 @@ res.status(200).json({
 });
 });
 exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
-        const restaurant = await Restaurant.findByIdAndDelete(req.params.id, req.body,{
-            new: true,
-            runValidators: true
-        })
+        const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
+          
         
         if (!restaurant){
             return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,500)); 
         }
+        if (restaurant.user.toString() != req.user.id && req.user.role != 'admin'){
+            return  next(new ErrorHandler(`User ${req.user.id} not authorized to delete this resource`,403));     
+        
+        
+        }
+            restaurant = await Restaurant.findByIdAndUpdate(req.params.id, req,body, {
+                new: true,
+                runValidators: true
+            });
         restaurant.remove();
 
 

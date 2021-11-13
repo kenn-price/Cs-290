@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const ErrorHandler = require('../utils/errorResponse')
-const asyncHandler =require('../middleware/asyncHandler')
+const asyncHandler =require('../middleware/asyncHandler');
+const ErrorResponse = require('../utils/errorResponse');
 
 //POST /api/v1/auth/register
 exports.registerUser= asyncHandler( async (req,res, next) => {
@@ -44,7 +45,26 @@ sendTokenResponse(user,200, res);
      // Create JWT Token
      
      });
-// GET /api/v1/auth/me
+// POST /api/v1/auth/forgotpassword
+exports.forgotPassword = asyncHandler(async(req,res,next)=>{
+  const user = await User.findOne({email: req.body.email})
+
+
+  if(!user){
+    return next( new ErrorResponse('no user found with that email', 404))  // Bad security
+  }
+
+  // Get a reset token
+const resetToken = user.getResetPasswordToken()
+
+  // Save that token to the user
+await user.save({validateBeforeSave: false});
+  res.status(200).json({
+    success: true,
+    data:user,
+  });
+});
+
 exports.getMe = asyncHandler(async(req,res,next)=>{
   const user = await User.findById(req.user.id)
 

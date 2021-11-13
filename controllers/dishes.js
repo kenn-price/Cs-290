@@ -40,7 +40,8 @@ exports.getDish = asyncHandler(async (req,res, next) => {
 //Post
 exports.createDish = asyncHandler(async (req,res, next) => {
    //Update the req.body to add university _id
-   req.body.restaurant= req.params.id
+   req.body.restaurant= req.params.id;
+   req.body.user= req.user.id;
     // Get the restaurant
 const restaurant = await Restaurant.findById(req.params.id)
 
@@ -48,7 +49,10 @@ const restaurant = await Restaurant.findById(req.params.id)
 if(!restaurant){
     return next(new ErrorHandler(`No restaurant with ID of ${req.params.id}`, 400))
 }
-
+// Ensure user is restaurant owner
+if (restaurant.user.toString() != req.user.id && req.user.role != 'admin'){
+    return  next(new ErrorHandler(`User ${req.user.id} not authorized to add a dish to the restaurant ${restaurant._id}. `,403));    
+}
     //Create the restaurant, assigning
     const team = await Dish.create(req.body) // This will include the university _id we added
 
@@ -66,7 +70,10 @@ res.status(201).json({
         if (!dish){
             return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 404))
         }
-
+// Ensure user is DISH owner
+if (dish.user.toString() != req.user.id && req.user.role != 'admin'){
+    return  next(new ErrorHandler(`User ${req.user.id} not authorized to update dish ${dish._id}. `,403));    
+}
         dish = await Dish.findByIdAndUpdate(req.params.teamId, req.body, {
             new: true,
             runValidators: true
@@ -82,6 +89,10 @@ res.status(201).json({
     
             if (!dish){
                 return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 404))
+            }
+            // Ensure iser is owner
+            if (dish.user.toString() != req.user.id && req.user.role != 'admin'){
+                return  next(new ErrorHandler(`User ${req.user.id} not authorized to delete dish ${dish._id}. `,403));    
             }
     
            await dish.remove()
