@@ -1,7 +1,9 @@
+const crypto = require('crypto')
 const User = require('../models/user')
 const ErrorHandler = require('../utils/errorResponse')
 const asyncHandler =require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
+const sendEmail = require('../utils/sendEmail')
 
 //POST /api/v1/auth/register
 exports.registerUser= asyncHandler( async (req,res, next) => {
@@ -23,19 +25,19 @@ exports.registerUser= asyncHandler( async (req,res, next) => {
     const { email, password}= req.body;
   // Ensure email and password were included
   if (!email || !password) {
-    return next(new ErrorHandler('Please provide an email and password', 400))
+    return next(new ErrorResponse('Please provide an email and password', 400))
   }
 
 // Check for user
     const user = await User.findOne({email}).select('+password')
   if (!user){
-    return next(new ErrorHandler('Invalid credentials', 401))
+    return next(new ErrorResponse('Invalid credentials', 401))
   }
 
 // check if the entered password matches the password in DB
 const isMatch = await user.matchPassword(password);
 if(!isMatch){
-  return next(new ErrorHandler('Invalid credentials', 401))
+  return next(new ErrorResponse('Invalid credentials', 401))
 }
 
 
@@ -59,10 +61,65 @@ const resetToken = user.getResetPasswordToken()
 
   // Save that token to the user
 await user.save({validateBeforeSave: false});
-  res.status(200).json({
-    success: true,
-    data:user,
+
+// create reset url
+// Format==>https://localhost:3000/api/v1/auth/resetpassword/:resettoken
+const resetUrl= `${req.protocol}://${req.get('host')}/api/v1/auth/resetpassword/${resetToken}`
+
+// Create message
+const message=`You are receiving this email because someone has requested th reset of a password at Restaurant API. Please make a PUT request to: \n\n ${resetUrl}`;
+
+// send email
+try{
+  await sendEmail({
+      recipient: user.email,
+      subject:'Password Reset Token',
+      message
+})
+res.status(200).json({
+  success: true,
+  data:'Email sent',
+});
+}catch(err){
+  console.log(err)
+
+  //Clear reset password field from the DB
+  user.resetPasswordToken= undefined
+  user.resetPasswordExpire= undefined
+  await user.save({validateBeforeSave:false});
+  return next(new ErrorResponse('Problem sending email',500))
+}
+
+
+ 
+});
+//PUT/ api/v1/auth/resetpassword/:resetToken
+exports.resetPassword = asyncHandler(async(req,res,next)=>{
+ //Get hased token
+const resetPasswordToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex')
+
+ //FInd user with resetPasswordToken that matches the provided token, after hashing
+ // Make sure is not past expiration date
+ 
+  const user = await User.findOne({
+    resetPasswordToken: resetPasswordToken,
+    resetPasswordExpire:{
+      $gt: Date.now()
+    }
   });
+
+  if(!user)
+{
+  return next(new ErrorResponse('invalid token or expired', 400))
+}
+
+// set new password
+user.password=req.body.password
+user.resetPasswordToken= undefined;
+user.resetPasswordExpire= undefined;
+await user.save();
+
+  sendTokenResponse(user, 200, res);
 });
 
 exports.getMe = asyncHandler(async(req,res,next)=>{
