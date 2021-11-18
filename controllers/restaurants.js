@@ -76,10 +76,6 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
         
         
         }
-            restaurant = await Restaurant.findByIdAndUpdate(req.params.id, req,body, {
-                new: true,
-                runValidators: true
-            });
         restaurant.remove();
 
 
@@ -122,6 +118,12 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
                 if (!restaurant){
                     return  next(new ErrorHandler(`Restaurant not found with id of ${req.params.id}`,500)); 
                 }
+                if (restaurant.user.toString() != req.user.id && req.user.role != 'admin'){
+                    return  next(new ErrorHandler(`User ${req.user.id} not authorized to update this resource`,403));     
+                
+                
+                }
+                
                //validate the image
                if(!req.files){
                 return  next(new ErrorHandler(`Please upload an image file`,400)); 

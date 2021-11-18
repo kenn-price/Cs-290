@@ -38,7 +38,7 @@ return next(new ErrorResponse('Not authorize to acess this resource', 401))
 exports.authorize= (...roles) =>{
     return(req,res,next) =>{
         if(!roles.includes(req.user.role)){
-            return nexy(new ErrorResponse(`Role ${req.user.role} is not authorized to acess this resource`,403)) 
+            return next(new ErrorResponse(`Role ${req.user.role} is not authorized to acess this resource`,403)) 
         }
         next();
     }

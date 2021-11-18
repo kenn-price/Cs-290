@@ -130,6 +130,43 @@ exports.getMe = asyncHandler(async(req,res,next)=>{
     data:user,
   });
 });
+
+
+//PUT /api/v1/auth/updatedetails
+exports.updateDetails = asyncHandler(async(req,res,next)=>{
+  const fieldsToUpdate = {
+    username: req.body.username,
+    email: req.body.email
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, fieldToUpdate,{
+    new: true,
+    runValidators:true
+  });
+  res.status(200).json({
+    success: true,
+    data:user,
+  });
+});
+
+
+//PUT /api/v1/auth/updatepassword
+exports.updatePassword= asyncHandler(async(req,res,next)=>{
+  const user = await User.findById(req.user.id).select("+password");
+
+  //Verify current password is correct
+  if(!(await user.matchPassword(req.body.currentPassword
+  ))){
+    return next (new ErrorResponse('Incorrect currect password',401))
+  }
+
+  user.password= req.body.newPassword;
+
+  sendTokenResponse(user, 200, res);
+  });
+
+
+
      //========Utility Fucntions==========
      //get token from model, create cookie, and send response
      const sendTokenResponse = (user, status, res) => {
