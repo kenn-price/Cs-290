@@ -18,9 +18,13 @@ const {getRestaurants,
 
 //Include other resources router
 const dishRouter = require('./dishes');
+const reviewRouter = require('./reviews');
+
 
 // Reroute into other resource routers
 router.use('/:id/dishes', dishRouter);
+router.use('/:id/reviews', reviewRouter);
+
 
 router.route('/').get(advancedResults(Restaurant, 'dishes'),getRestaurants).post(protect, authorize('publisher','admin'), createRestaurant);
 router.route('/radius').get(getRestaurantsInRadius)

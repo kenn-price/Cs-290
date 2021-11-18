@@ -1,7 +1,5 @@
 const User = require('../models/user')
 const asyncHandler =require('../middleware/asyncHandler');
-const ErrorResponse = require('../utils/errorResponse');
-const restaurant = require('../models/restaurant');
 
 // GET /api/v1/users
 exports.getUsers= asyncHandler( async (req,res, next) => {
@@ -19,7 +17,7 @@ exports.getUsers= asyncHandler( async (req,res, next) => {
     })
   });
 // GET/api/v1/users/:id
-  exports.getUsers= asyncHandler( async (req,res, next) => {
+  exports.getUser= asyncHandler( async (req,res, next) => {
    const user = await User.findById(req.params.id)
    res.status(200).json({
     success: true,
@@ -42,7 +40,7 @@ exports.getUsers= asyncHandler( async (req,res, next) => {
    // Delete/api/v1/users/:id
   exports.deleteUser= asyncHandler( async (req,res, next) => {
     await User.findByIdAndDelete(req.params.id)
-    
+
     res.status(200).json({
      success: true,
      data: user,

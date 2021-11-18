@@ -39,12 +39,16 @@ const restaurantsRoutes = require('./routes/restaurants')
 const dishRoutes = require('./routes/dishes')
 const authRoutes = require('./routes/auth')
 const userRoutes= require('./routes/users')
+const reviewRoutes= require('./routes/reviews')
+
 
     // Use   routes
     app.use('/api/v1/restaurants',restaurantsRoutes);// DO I need to change from plural to singular
     app.use('/api/v1/dishes',dishRoutes);
     app.use('/api/v1/auth', authRoutes);
     app.use('/api/v1/users',userRoutes)
+    app.use('/api/v1/reviews',reviewRoutes)
+
     
 // Error Handling Middleware- MUST BE LAST APP.USE();
 app.use(errorHandler);
