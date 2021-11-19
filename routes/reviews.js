@@ -6,13 +6,13 @@ const Review = require('../models/review')
 const {protect, authorize} = require('../middleware/auth')
 
 
-const {getReviews,getReview}
+const {getReviews,getReview, createReview}
 = require('../controllers/reviews');
 
 ///api/v1/reviews
 // /api/v1/restaurants/:id/reviews
 router.route('/').get(advancedResults(Review, {path: 'restaurant',
-select: 'name description' }),getReviews);
+select: 'name description' }),getReviews).post(protect,authorize('user','admin'),createReview);
 
 router.route('/:id').get(getReview)
 

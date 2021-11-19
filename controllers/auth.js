@@ -1,6 +1,5 @@
 const crypto = require('crypto')
 const User = require('../models/user')
-const ErrorHandler = require('../utils/errorResponse')
 const asyncHandler =require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendEmail')

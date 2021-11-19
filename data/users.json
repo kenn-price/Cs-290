@@ -47,6 +47,26 @@
     "email":"JulieErtz@ahol.com",
     "role":"user",
     "password":"asdfasdfasdf"
+},{
+    "_id":"619716f3af8eff52d0e66d8c",
+    "username":"Reviewer",
+    "email":"reviewer@reviewer.com",
+    "role":"user",
+    "password":"asdfasdfasdf"
+},{
+    "_id":"61971f74be946d1d7c27091b",
+    "username":"Tessa Tyson",
+    "email":"TTyson@gmail.com",
+    "role":"user",
+    "password":"asdfasdfasdf"
+},
+{
+    "_id":"61971ff61e18c23617c1daf2",
+    "username":"Hope Richardson",
+    "email":"HopeRichardson@yahoo.com",
+    "role":"user",
+    "password":"asdfasdfasdf"
 }
+
 
 ]
