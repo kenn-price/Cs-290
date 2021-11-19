@@ -35,5 +35,44 @@ user:{
 
 // Add index to user can only add one review per university
 ReviewSchema.index({restaurant: 1, user: 1}, {unique: true})
+//========STATIC========
+// Static method to get average of Dish costs
+ReviewSchema.statics.getAverageRating = async function(id){
+  console.log(`Calculating average cost for restaurant with ID of ${id}`)
 
+//Create Aggregated Array
+const aggregatedArray = await this.aggregate([
+  //This array defines a "pipeline" that will be executed in order
+  {
+   $match:{restaurant: id}   
+  },
+  {
+      $group:{
+          // Get a group that has the the restaurant _id and the average of the fees
+          _id:'$restaurant',
+          averageRating:{$avg: '$rating'}
+      },
+  }
+]);
+
+
+//Update the restaurant with the average cost value
+try{
+await this.model('Restaurant').findByIdAndUpdate(id,{
+  averageCost: (aggregatedArray[0].averageRating),
+});
+}catch (err){
+  console.error(err)
+}
+};
+
+// =============Middleware=========
+//Call getAverageRating after saving
+ReviewSchema.post('save', async function(){
+  await this.constructor.getAverageRating(this.restaurant)
+});
+//Call getAverageCost after removing
+ReviewSchema.pre('remove', async function(){
+  await this.constructor.getAverageRating(this.restaurant)
+});
 module.exports = mongoose.model('Review', ReviewSchema)
