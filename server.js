@@ -4,6 +4,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const fileupload = require('express-fileupload')
 const cookieParser= require('cookie-parser')
+const mongoSanitize= require('express-mongo-sanitize')
 
 //Import Local Files
 const connectToDB = require('./config/connectToDB');
@@ -27,6 +28,9 @@ connectToDB();
 
 //File uploading
 app.use(fileupload());
+
+//Sanitize input
+app.use(mongoSanitize());
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));
