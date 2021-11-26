@@ -42,6 +42,18 @@ if(!isMatch){
 
 sendTokenResponse(user,200, res);
 
+//GET/ api/v1/auth/logout
+exports.logout = asyncHandler(async(req,res,next)=>{
+  res.cookie("token", "none", {
+    expires: new Date(Date.now()+5*1000),
+    httpOnly:true
+  });
+  
+  res.status(200).json({
+    success: true,
+    data:{},
+  });
+});
 
      // Create JWT Token
      
@@ -120,7 +132,7 @@ await user.save();
 
   sendTokenResponse(user, 200, res);
 });
-
+//GET/ api/v1/auth/me
 exports.getMe = asyncHandler(async(req,res,next)=>{
   const user = await User.findById(req.user.id)
 
