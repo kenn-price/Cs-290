@@ -5,6 +5,8 @@ const dotenv = require('dotenv')
 const fileupload = require('express-fileupload')
 const cookieParser= require('cookie-parser')
 const mongoSanitize= require('express-mongo-sanitize')
+const helmet = require('helmet')
+const xssClean = require('xss-clean')
 
 //Import Local Files
 const connectToDB = require('./config/connectToDB');
@@ -31,6 +33,12 @@ app.use(fileupload());
 
 //Sanitize input
 app.use(mongoSanitize());
+
+//Set security header
+app.use(helmet());
+
+// Prevent XSS Attacks
+app.use(xssClean());
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, "public")));
