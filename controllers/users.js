@@ -39,7 +39,7 @@ exports.getUsers= asyncHandler( async (req,res, next) => {
 
    // Delete/api/v1/users/:id
   exports.deleteUser= asyncHandler( async (req,res, next) => {
-    await User.findByIdAndDelete(req.params.id)
+   const user = await User.findByIdAndDelete(req.params.id)
 
     res.status(200).json({
      success: true,

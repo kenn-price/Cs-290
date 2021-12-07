@@ -5,7 +5,6 @@
         "dish_item":"Pasta",
         "website":"https://www.chilis.com/menu/chicken-seafood/cajun-chicken-pasta",
         "sesonalMenu": false,
-        "cost": 12.99,
         "restaurant":"616f88e364f750c182afcb75",
         "user":"618d60c054bc1f394c9deab7"
     },
@@ -15,7 +14,6 @@
         "dish_item":"Burgers",
         "website":"https://www.applebees.com/en/menu/burgers/whisky-bacon-burger",
         "sesonalMenu": false,
-        "cost":10.99,
         "restaurant":"616f89596290dd08f11783e0",
         "user":"618db871dbb9b58d3503aaa4"
     },
@@ -25,7 +23,6 @@
         "dish_item":"Appetizers",
         "website":"https://order.outback.com/menu/florence-2/products/32239579",
         "sesonalMenu": false,
-        "cost": 7.99,
         "restaurant":"616f8bd51d65b320fdf135fc" ,
         "user":"618d62351254571b17d3e213"
     },
@@ -35,7 +32,6 @@
         "dish_item":"Steak",
         "website":"https://www.longhornsteakhouse.com/menu/the-longhorn-porterhouse/prod4450042",
         "sesonalMenu": false,
-        "cost": 28.99,
         "restaurant":"61707ae15733cd0a7747f26b",
         "user":"618d6305ca2605cc95a99cca"
     },{
@@ -44,7 +40,6 @@
         "dish_item":"Seafood",
         "website":"https://www.goldencorral.com/menu/",
         "sesonalMenu": false,
-        "cost": 13.49,
         "restaurant":"61707b22fbf2ec3f01590c55",
         "user":"618d64217967edfe5640bc8d"
     }

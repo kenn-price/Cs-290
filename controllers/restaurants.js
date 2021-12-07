@@ -65,7 +65,7 @@ res.status(200).json({
 });
 });
 exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
-        const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
+        const restaurant = await Restaurant.findById(req.params.id);
           
         
         if (!restaurant){
@@ -76,7 +76,7 @@ exports.deleteRestaurant = asyncHandler(async (req,res, next) => {
         
         
         }
-        restaurant.remove();
+        Restaurant.remove();
 
 
         res.status(200).json({

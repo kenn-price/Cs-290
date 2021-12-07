@@ -80,9 +80,9 @@ const RestaurantSchema = new mongoose.Schema({
         min:[1, "Rating must be at least 1"],
         max:[5, "Rating must be less than or equal to 5"]
     },
-    averageCost:{
-        type:Number,
-    },
+   // averageCost:{
+      //  type:Number,
+    //},
     photo:{
         type: String,   // Just the file name
         default: "no-photo.png"
@@ -91,10 +91,16 @@ const RestaurantSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    hours:{
-        type:String,
-        min:"00:00",
-        max:"24:00",
+    openAt:{
+        type:Number,
+        min:0,
+        max:2400,
+        required:[true," Has to be military time between 0:00-24:00 hours"]
+    },
+    closeAt:{
+        type:Number,
+        min:0,
+        max:2400,
         required:[true," Has to be military time between 0:00-24:00 hours"]
     },
     user:{

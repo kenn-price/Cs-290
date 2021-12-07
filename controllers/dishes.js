@@ -1,5 +1,5 @@
 const Dish= require('../models/dish');
-const Restuarant= require('../models/restaurant')
+const Restaurant= require('../models/restaurant')
 const ErrorHandler = require('../utils/errorResponse')
 const asyncHandler =require('../middleware/asyncHandler')
 
@@ -23,23 +23,23 @@ exports.getDishes = asyncHandler(async (req,res, next) => {
   
 
 exports.getDish = asyncHandler(async (req,res, next) => {
-   const team = await Dish.findById(req.params.dishId).populate({
+   const dish_item = await Dish.findById(req.params.dishId).populate({
      path: 'restaurants',
     select: 'name items' 
    })
-   if (!team){
+   if (!dish){
        return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 400))
    }
 
     res.status(200).json({
         success: true,
-        count: teams.length,
-        data:teams
+        count: dishes.length,
+        data:dishes
     })
 });
 //Post
 exports.createDish = asyncHandler(async (req,res, next) => {
-   //Update the req.body to add university _id
+   //Update the req.body to add restaurant _id
    req.body.restaurant= req.params.id;
    req.body.user= req.user.id;
     // Get the restaurant
@@ -54,7 +54,7 @@ if (restaurant.user.toString() != req.user.id && req.user.role != 'admin'){
     return  next(new ErrorHandler(`User ${req.user.id} not authorized to add a dish to the restaurant ${restaurant._id}. `,403));    
 }
     //Create the restaurant, assigning
-    const team = await Dish.create(req.body) // This will include the university _id we added
+    const dish = await Dish.create(req.body) // This will include the restaurant _id we added
 
 // Send response
 res.status(201).json({
@@ -65,7 +65,7 @@ res.status(201).json({
      });
 // put
      exports.updateDish = asyncHandler(async (req,res, next) => {
-        let Dish = await Dish.findById(req.params.teamId)
+        let Dish = await Dish.findById(req.params.dishId)
 
         if (!dish){
             return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 404))
@@ -74,7 +74,7 @@ res.status(201).json({
 if (dish.user.toString() != req.user.id && req.user.role != 'admin'){
     return  next(new ErrorHandler(`User ${req.user.id} not authorized to update dish ${dish._id}. `,403));    
 }
-        dish = await Dish.findByIdAndUpdate(req.params.teamId, req.body, {
+        dish = await Dish.findByIdAndUpdate(req.params.dishId, req.body, {
             new: true,
             runValidators: true
         })
@@ -85,7 +85,7 @@ if (dish.user.toString() != req.user.id && req.user.role != 'admin'){
             });
           });
           exports.deleteDish = asyncHandler(async (req,res, next) => {
-            let Dish = await Dish.findById(req.params.teamId)
+            let dish = await Dish.findById(req.params.dishId)
     
             if (!dish){
                 return next(new ErrorHandler(`No dish with ID of ${req.params.dishId}`, 404))

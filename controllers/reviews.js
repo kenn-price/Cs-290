@@ -1,5 +1,5 @@
 const Review= require('../models/review');
-const Restuarant= require('../models/restaurant')
+const Restaurant= require('../models/restaurant')
 const ErrorHandler = require('../utils/errorResponse')
 const asyncHandler =require('../middleware/asyncHandler');
 const ErrorResponse = require('../utils/errorResponse');
@@ -43,10 +43,10 @@ exports.getReview = asyncHandler(async (req,res, next) => {
 // POST /api/v1/restaurant/:id/reviews
 exports.createReview = asyncHandler(async (req,res, next) => {
     // add the university and user ids to the request body
-req.body.university = req.params.id
+req.body.Restaurant = req.params.id
 req.body.user= req.user.id
 
-const restaurant= await restaurant.findById(req.params.id)
+const restaurant= await Restaurant.findById(req.params.id)
 
 if(!restaurant){
     return next(new ErrorResponse(`No restaurant found with id of ${req.params.id}`, 404));
@@ -71,7 +71,7 @@ if(!review){
 }
 
 // Verify review belongs to the user(or user is admin)
-if(!review.user.toString() !== req.user.id && req.user.role !== 'admin'){
+if(review.user.toString() !== req.user.id && req.user.role !== 'admin'){
     return next(new ErrorResponse('Not authorized to update review', 404));
 
 }
@@ -89,7 +89,7 @@ review = await Review.findByIdAndUpdate(req.params.id, req.body,{
 });
 
 exports.deleteReview = asyncHandler(async (req,res, next) => {
-    const review = await Review.findById(req.params.id)
+    let review = await Review.findById(req.params.id)
    
    if(!review){
        return next(new ErrorResponse(`No review found with id of ${req.params.id}`, 404));
@@ -97,7 +97,7 @@ exports.deleteReview = asyncHandler(async (req,res, next) => {
    }
    
    // Verify review belongs to the user(or user is admin)
-   if(!review.user.toString() !== req.user.id && req.user.role !== 'admin'){
+   if(review.user.toString() !== req.user.id && req.user.role !== 'admin'){
        return next(new ErrorResponse('Not authorized to update review', 403));
    
    }
